@@ -1,23 +1,68 @@
+@font-face {
+    font-family: "Envy Code R";
+    src: url("./EnvyCodeR.ttf") format("ttf")
+}
+
+@font-face {
+    font-family: "Raleway Regular";
+    src: url("./Raleway-Regular.ttf") format("ttf")
+}
+
 .jeudupendu {
-display: flex;
-flex-wrap: wrap;
-width: 350px;
-margin: auto;
+    font-family: "Raleway Regular", sans-serif;
+    display: block;
+    flex-wrap: wrap;
+    width: 350px;
+    margin: auto;
 }
 
 .wordToFind {
-    letter-spacing: .3rem;
+
 }
 
 .guesses {
     text-align: right;
+    margin: 0.3rem 0;
+    border: solid 1px;
 }
 
-.keyboard{
+.victory {
+    color: darkgreen;
+    font-size: 2rem;
+}
+
+.keyboard {
     display: flex;
     flex-wrap: wrap;
 }
 
-.keyboard span {
-    margin-right: .5em;
+.letterclicked, .letternotClicked {
+    margin: 0.5rem;
+}
+
+.letterclicked .symbol{
+    background: darkgray;
+}
+
+.keyboard .symbol {
+    margin-right: 0.5rem;
+    padding: 0.1rem 0.2rem ;
+    border: darkred solid;
+}
+
+.symbol {
+    font-family: "Envy Code R", monospace;
+    letter-spacing: .3rem;
+
+}
+
+.startButton {
+    text-align: center;
+    margin: 2rem;
+}
+
+.startButton button {
+    font-family: "Raleway Regular", sans-serif;
+    font-size: 1.2rem;
+    background: #e3e3e3;
 }

@@ -2,40 +2,72 @@ import React, { Component } from 'react'
 import './App.css';
 import KeyboardLetter from "./KeyboardLetter";
 
+const EXPRESSIONS_ARRAY = ["expression à deviner", "chocolat", "aléatoire", "bout de pain", "bouteille", "savon"].map(expression => (
+    expression.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase().split("")
+));
+
 class App extends Component {
   state = {
-    wordArray: "expression à deviner".normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase().split("").map((letter, index) => ({letter: letter, index: index, feedback: "undiscovered"})),
-    alphabet: "abcdefghijklmnopqrstuvwxyz".toUpperCase().split(""),//.map((letter, index) => ({letter: letter, index: index, feedback: "undiscovered", onClick: this.handleNewLetterClick})),
-    lettersDiscovered: [],
-    guesses: 0,
+    playing: false,
+    //expression à deviner
+    wordArray: null,
+    alphabet: "abcdefghijklmnopqrstuvwxyz".toUpperCase().split(""),
+    lettersClicked: [" "],
   }
 
-  wordWithHiddenLetter(wordArray) {
+  startGame = () => {
+    this.setState({
+      playing: true,
+      wordArray: EXPRESSIONS_ARRAY[Math.floor(Math.random() * EXPRESSIONS_ARRAY.length)],
+      lettersClicked: [" "],
+    })
+  }
+
+  // fx flechee pour le binding
+  wordWithHiddenLetter = () => {
+    const {wordArray, lettersClicked} = this.state
     console.log("sentence ", wordArray)
-    return wordArray.map((letter,index, feedback) => (
-        (letter === " ") ? (
-            <span>&#160;</span>
-        ) : (
-            (feedback === "discovered") ? <span>{letter}</span> : <span>_</span>)
+    console.log("letters discovered ", lettersClicked)
+
+    return wordArray.map((letter,index) => (
+        <span className={"wordLetter"} key={index}>
+          { (lettersClicked.includes(letter)) ? <span className="symbol">{letter}</span> : <span className="symbol">_</span> }
+        </span>
         )
     )
   }
 
-  // fx fleche pour acceder au state
-  handleNewLetterClick = (indexLetter) => {
-    let newAlphabet = this.state.alphabet
-    newAlphabet[indexLetter][1] = "discovered"
-    var newWordArray = this.state.wordArray
+  // fx flechee pour le binding
+  handleLetterClick = (letter) => {
+    console.log(letter)
+    const {lettersClicked,} = this.state
+    const letterDiscovered = lettersClicked.includes(letter)
 
-    this.setState({alphabet: newAlphabet})
+    console.log( "So ? ", letterDiscovered ? "known" : "unknown")
+
+    if ( !letterDiscovered ) {
+      this.setState({lettersClicked: [...lettersClicked, letter],})
+    }
   }
 
-  handleOldLetterClick(index) {
-    console.log("known : ", index)
+  // fx flechee pour le binding
+  getFeedbackForLetter = (letter) => {
+    const {lettersClicked} = this.state
+    const letterMatched = lettersClicked.includes(letter)
+
+    return letterMatched ? "clicked" : "notClicked"
+  }
+
+  hasWon() {
+    const {wordArray, lettersClicked} = this.state
+
+    return !wordArray.map((letter) => (
+        lettersClicked.includes(letter)) ? letter : "_"
+    ).includes("_")
   }
 
   render() {
-    const {wordArray, alphabet, lettersDiscovered, guesses} = this.state
+    const {wordArray, alphabet, lettersClicked,} = this.state
 
     return (
         <div className="App">
@@ -44,25 +76,50 @@ class App extends Component {
           </header>
 
           <div className="jeudupendu">
-            <div className="wordToFind">
-              {this.wordWithHiddenLetter(wordArray)}
-            </div>
 
-            <div className="guesses">
-              nombre d'essais : {guesses }
-            </div>
+            {this.state.playing ? (
+                <div className="playing">
+                  <h2>Trouvez le(s) mot(s) ci-dessous, en {wordArray.filter(function (value) {
+                    return value !== " "
+                  }).length} lettres</h2>
+                  <div className="wordToFind">
+                    {this.wordWithHiddenLetter(wordArray)}
+                  </div>
 
-            <div className="keyboard">
-              {alphabet.map((letter, index) => (
-                  <KeyboardLetter
-                      letter={letter}
-                      index={index}
-                      key={index}
-                      feedback={feedback}
-                      onClick={feedback==="undiscovered" ? this.handleNewLetterClick : this.handleOldLetterClick}
-                  />
-              ))}
-            </div>
+                  {true && <div className="guesses">
+                    Essais ratés : {lettersClicked.map((letter) => (
+                          <span className="symbol">{ (wordArray.includes(letter)) ? "" : letter}</span>
+                      )
+                  ) }
+                  </div>}
+
+                  <div className="keyboard">
+                    {this.hasWon() ? (
+                        <div className="victory">
+                          Vous avez gagné en {lettersClicked.length-1} coups
+                          <div className="startButton" onClick={this.startGame}>
+                            <button>{"Recommencer"}</button>
+                          </div>
+                        </div>
+
+                    ) : (
+                        alphabet.map((letter, index) => (
+                            <KeyboardLetter
+                                letter={letter}
+                                index={index}
+                                key={index}
+                                feedback={this.getFeedbackForLetter(letter)}
+                                onClick={this.handleLetterClick}
+                            />
+                        ))
+                    )}
+                  </div>
+                </div>
+            ) : (
+                <div className="startButton" onClick={this.startGame}>
+                  <button>{"Commencer"}</button>
+                </div>
+            )}
           </div>
         </div>
     )
