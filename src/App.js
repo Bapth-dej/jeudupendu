@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './App.css';
 import KeyboardLetter from "./KeyboardLetter";
 
-const EXPRESSIONS_ARRAY = ["expression à deviner", "chocolat", "aléatoire", "bout de pain", "bouteille", "savon"].map(expression => (
+const EXPRESSIONS_ARRAY = ["expression à deviner", "chocolat", "aléatoire", "bout de pain", "bouteille", "savon", "world wide web"].map(expression => (
     expression.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase().split("")
 ));
 
@@ -26,8 +26,6 @@ class App extends Component {
   // fx flechee pour le binding
   wordWithHiddenLetter = () => {
     const {wordArray, lettersClicked} = this.state
-    console.log("sentence ", wordArray)
-    console.log("letters discovered ", lettersClicked)
 
     return wordArray.map((letter,index) => (
         <span className={"wordLetter"} key={index}>
@@ -39,11 +37,8 @@ class App extends Component {
 
   // fx flechee pour le binding
   handleLetterClick = (letter) => {
-    console.log(letter)
     const {lettersClicked,} = this.state
     const letterDiscovered = lettersClicked.includes(letter)
-
-    console.log( "So ? ", letterDiscovered ? "known" : "unknown")
 
     if ( !letterDiscovered ) {
       this.setState({lettersClicked: [...lettersClicked, letter],})
@@ -79,16 +74,23 @@ class App extends Component {
 
             {this.state.playing ? (
                 <div className="playing">
-                  <h2>Trouvez le(s) mot(s) ci-dessous, en {wordArray.filter(function (value) {
-                    return value !== " "
-                  }).length} lettres</h2>
+                  {this.hasWon() ? (
+                      <div className="victory">
+                        Vous avez gagné en {lettersClicked.length-1} coups
+                      </div>
+
+                  ) : (
+                      <h2>Trouvez le(s) mot(s) ci-dessous, en {wordArray.filter(function (value) {
+                        return value !== " "
+                      }).length} lettres</h2>
+                  )}
                   <div className="wordToFind">
                     {this.wordWithHiddenLetter(wordArray)}
                   </div>
 
-                  {true && <div className="guesses">
-                    Essais ratés : {lettersClicked.map((letter) => (
-                          <span className="symbol">{ (wordArray.includes(letter)) ? "" : letter}</span>
+                  {<div className="guesses">
+                    Essais ratés : {lettersClicked.map((letter, index) => (
+                          <span className="symbol" key={index}>{ (wordArray.includes(letter)) ? "" : letter}</span>
                       )
                   ) }
                   </div>}
@@ -96,7 +98,6 @@ class App extends Component {
                   <div className="keyboard">
                     {this.hasWon() ? (
                         <div className="victory">
-                          Vous avez gagné en {lettersClicked.length-1} coups
                           <div className="startButton" onClick={this.startGame}>
                             <button>{"Recommencer"}</button>
                           </div>

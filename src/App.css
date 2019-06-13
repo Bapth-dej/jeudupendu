@@ -16,6 +16,10 @@
     margin: auto;
 }
 
+h1 {
+    text-align: center;
+}
+
 .wordToFind {
 
 }
@@ -34,6 +38,7 @@
 .keyboard {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 }
 
 .letterclicked, .letternotClicked {
@@ -46,7 +51,7 @@
 
 .keyboard .symbol {
     margin-right: 0.5rem;
-    padding: 0.1rem 0.2rem ;
+    padding: 0.1rem 0.4rem ;
     border: darkred solid;
 }
 
