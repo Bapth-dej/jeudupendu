@@ -1,73 +1,72 @@
 @font-face {
-    font-family: "Envy Code R";
-    src: url("./EnvyCodeR.ttf") format("ttf")
+  font-family: "Envy Code R";
+  src: url("./EnvyCodeR.ttf") format("ttf");
 }
 
 @font-face {
-    font-family: "Raleway Regular";
-    src: url("./Raleway-Regular.ttf") format("ttf")
+  font-family: "Raleway Regular";
+  src: url("./Raleway-Regular.ttf") format("ttf");
 }
 
 .jeudupendu {
-    font-family: "Raleway Regular", sans-serif;
-    display: block;
-    flex-wrap: wrap;
-    width: 350px;
-    margin: auto;
+  font-family: "Raleway Regular", sans-serif;
+  display: block;
+  flex-wrap: wrap;
+  width: 350px;
+  margin: auto;
 }
 
 h1 {
-    text-align: center;
+  text-align: center;
 }
 
 .wordToFind {
-
 }
 
 .guesses {
-    text-align: right;
-    margin: 0.3rem 0;
-    border: solid 1px;
+  text-align: right;
+  margin: 0.3rem 0;
+  border: solid 1px;
 }
 
 .victory {
-    color: darkgreen;
-    font-size: 2rem;
+  color: darkgreen;
+  font-size: 2rem;
 }
 
 .keyboard {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.letterclicked, .letternotClicked {
-    margin: 0.5rem;
+.letterclicked,
+.letternotClicked {
+  margin: 0.5rem;
 }
 
-.letterclicked .symbol{
-    background: darkgray;
+.letterclicked .symbol {
+  background: darkgray;
 }
 
 .keyboard .symbol {
-    margin-right: 0.5rem;
-    padding: 0.1rem 0.4rem ;
-    border: darkred solid;
+  margin-right: 0.5rem;
+  padding: 0.1rem 0.4rem;
+  border: darkred solid;
 }
 
 .symbol {
-    font-family: "Envy Code R", monospace;
-    letter-spacing: .3rem;
-
+  font-family: "Envy Code R", monospace;
+  letter-spacing: 0.3rem;
 }
 
 .startButton {
-    text-align: center;
-    margin: 2rem;
+  text-align: center;
+  margin: 2rem;
 }
 
 .startButton button {
-    font-family: "Raleway Regular", sans-serif;
-    font-size: 1.2rem;
-    background: #e3e3e3;
+  font-family: "Raleway Regular", sans-serif;
+  font-size: 1.2rem;
+  background: #e3e3e3;
 }
