@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
-import KeyboardLetter from "./KeyboardLetter";
+import { KeyboardLetter, ALPHABET } from "./KeyboardLetter";
 
 const EXPRESSIONS_ARRAY = [
   "expression à deviner",
@@ -12,7 +12,9 @@ const EXPRESSIONS_ARRAY = [
   "world wide web"
 ].map(expression =>
   expression
+    // takes the strings and decomposes letters with accents to letter + accent
     .normalize("NFD")
+    // removes the accents from the string
     .replace(/[\u0300-\u036f]/g, "")
     .toUpperCase()
     .split("")
@@ -21,13 +23,12 @@ const EXPRESSIONS_ARRAY = [
 class App extends Component {
   state = {
     playing: false,
-    //expression à deviner
+    // expression to guess
     wordArray: null,
-    alphabet: "abcdefghijklmnopqrstuvwxyz".toUpperCase().split(""),
     lettersClicked: [" "]
   };
 
-  // fx flechee pour le binding
+  // Arrow fx for binding
   startGame = () => {
     this.setState({
       playing: true,
@@ -37,7 +38,7 @@ class App extends Component {
     });
   };
 
-  // fx flechee pour le binding
+  // Arrow fx for binding
   handleLetterClick = letter => {
     const { lettersClicked } = this.state;
     const letterDiscovered = lettersClicked.includes(letter);
@@ -79,20 +80,19 @@ class App extends Component {
   }
 
   render() {
-    const { playing, wordArray, alphabet, lettersClicked } = this.state;
+    const { playing, wordArray, lettersClicked } = this.state;
 
     return (
       <div className="App">
         <header className="App-header">
           <h1> Le jeu du Pendu! </h1>
         </header>
-        <div className="jeudupendu">
+        <div className="game">
           {playing ? (
             <div className="playing">
               {this.hasWon() ? (
                 <div className="victory">
-                  Vous avez gagné en {lettersClicked.length - 1}
-                  coups
+                  Vous avez gagné en {lettersClicked.length - 1} coups
                 </div>
               ) : (
                 <h2>
@@ -122,11 +122,11 @@ class App extends Component {
                 {this.hasWon() ? (
                   <div className="victory">
                     <div className="startButton" onClick={this.startGame}>
-                      <button> {"Recommencer"} </button>
+                      <button>{"Recommencer"}</button>
                     </div>
                   </div>
                 ) : (
-                  alphabet.map((letter, index) => (
+                  ALPHABET.map((letter, index) => (
                     <KeyboardLetter
                       letter={letter}
                       index={index}
@@ -140,7 +140,7 @@ class App extends Component {
             </div>
           ) : (
             <div className="startButton" onClick={this.startGame}>
-              <button> {"Commencer"} </button>
+              <button>{"Commencer"}</button>
             </div>
           )}
         </div>

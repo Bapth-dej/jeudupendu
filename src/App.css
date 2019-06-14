@@ -8,7 +8,7 @@
   src: url("./Raleway-Regular.ttf") format("ttf");
 }
 
-.jeudupendu {
+.game {
   font-family: "Raleway Regular", sans-serif;
   display: block;
   flex-wrap: wrap;

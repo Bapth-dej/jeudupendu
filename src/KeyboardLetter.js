@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-const KeyboardLetter = ({ letter, index, feedback, onClick }) => (
+export const KeyboardLetter = ({ letter, index, feedback, onClick }) => (
   <span
     className={`letter${feedback}`}
     onClick={() => onClick(letter)}
@@ -18,4 +18,4 @@ KeyboardLetter.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
-export default KeyboardLetter;
+export const ALPHABET = "abcdefghijklmnopqrstuvwxyz".toUpperCase().split("");
