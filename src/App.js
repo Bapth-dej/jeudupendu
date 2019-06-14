@@ -15,24 +15,13 @@ class App extends Component {
     lettersClicked: [" "],
   }
 
+  // fx flechee pour le binding
   startGame = () => {
     this.setState({
       playing: true,
       wordArray: EXPRESSIONS_ARRAY[Math.floor(Math.random() * EXPRESSIONS_ARRAY.length)],
       lettersClicked: [" "],
     })
-  }
-
-  // fx flechee pour le binding
-  wordWithHiddenLetter = () => {
-    const {wordArray, lettersClicked} = this.state
-
-    return wordArray.map((letter,index) => (
-        <span className={"wordLetter"} key={index}>
-          { (lettersClicked.includes(letter)) ? <span className="symbol">{letter}</span> : <span className="symbol">_</span> }
-        </span>
-        )
-    )
   }
 
   // fx flechee pour le binding
@@ -45,8 +34,18 @@ class App extends Component {
     }
   }
 
-  // fx flechee pour le binding
-  getFeedbackForLetter = (letter) => {
+  wordWithHiddenLetter () {
+    const {wordArray, lettersClicked} = this.state
+
+    return wordArray.map((letter,index) => (
+        <span className={"wordLetter"} key={index}>
+          { (lettersClicked.includes(letter)) ? <span className="symbol">{letter}</span> : <span className="symbol">_</span> }
+        </span>
+        )
+    )
+  }
+
+  getFeedbackForLetter (letter) {
     const {lettersClicked} = this.state
     const letterMatched = lettersClicked.includes(letter)
 
