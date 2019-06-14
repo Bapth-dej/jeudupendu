@@ -30,7 +30,7 @@ class App extends Component {
     const letterDiscovered = lettersClicked.includes(letter)
 
     if ( !letterDiscovered ) {
-      this.setState({lettersClicked: [...lettersClicked, letter],})
+      this.setState(prevState => ({lettersClicked: [...lettersClicked, letter],}))
     }
   }
 
@@ -61,7 +61,7 @@ class App extends Component {
   }
 
   render() {
-    const {wordArray, alphabet, lettersClicked,} = this.state
+    const {playing, wordArray, alphabet, lettersClicked,} = this.state
 
     return (
         <div className="App">
@@ -71,7 +71,7 @@ class App extends Component {
 
           <div className="jeudupendu">
 
-            {this.state.playing ? (
+            {playing ? (
                 <div className="playing">
                   {this.hasWon() ? (
                       <div className="victory">
