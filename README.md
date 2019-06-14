@@ -23,7 +23,7 @@ which will install the dependencies.
 
 ### Start the project 
 
-Rrun the app in development mode with :
+Run the app in development mode with :
 
 ```sh
 yarn start
